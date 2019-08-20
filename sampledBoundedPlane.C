@@ -34,13 +34,16 @@ License
 
 namespace Foam
 {
-    defineTypeNameAndDebug(sampledBoundedPlane, 0);
-    addNamedToRunTimeSelectionTable(sampledSurface, sampledBoundedPlane, word, boundedPlane);
+namespace sampledSurfaces
+{    
+    defineTypeNameAndDebug(boundedPlane, 0);
+    addToRunTimeSelectionTable(sampledSurface, boundedPlane, word);
+}    
 }
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-Foam::sampledBoundedPlane::sampledBoundedPlane
+Foam::sampledSurfaces::boundedPlane::boundedPlane
 (
     const word& name,
     const polyMesh& mesh,
@@ -64,7 +67,7 @@ Foam::sampledBoundedPlane::sampledBoundedPlane
 }
 
 
-Foam::sampledBoundedPlane::sampledBoundedPlane
+Foam::sampledSurfaces::boundedPlane::boundedPlane
 (
     const word& name,
     const polyMesh& mesh,
@@ -72,7 +75,7 @@ Foam::sampledBoundedPlane::sampledBoundedPlane
 )
 :
     sampledSurface(name, mesh, dict),
-    cuttingPlane(plane(dict)),
+    cuttingPlane(Foam::plane(dict)),
     zoneKey_(keyType::null),
     bounds_(dict.lookupOrDefault("bounds", boundBox::invertedBox)),
     triangulate_(dict.lookupOrDefault("triangulate", true)),
@@ -88,7 +91,7 @@ Foam::sampledBoundedPlane::sampledBoundedPlane
         vector norm = cs.globalVector(planeDesc().normal());
 
         // Assign the plane description
-        static_cast<plane&>(*this) = plane(base, norm);
+        static_cast<Foam::plane&>(*this) = Foam::plane(base, norm);
     }
 
     dict.readIfPresent("zone", zoneKey_);
@@ -103,19 +106,19 @@ Foam::sampledBoundedPlane::sampledBoundedPlane
 
 // * * * * * * * * * * * * * * * * Destructor  * * * * * * * * * * * * * * * //
 
-Foam::sampledBoundedPlane::~sampledBoundedPlane()
+Foam::sampledSurfaces::boundedPlane::~boundedPlane()
 {}
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-bool Foam::sampledBoundedPlane::needsUpdate() const
+bool Foam::sampledSurfaces::boundedPlane::needsUpdate() const
 {
     return needsUpdate_;
 }
 
 
-bool Foam::sampledBoundedPlane::expire()
+bool Foam::sampledSurfaces::boundedPlane::expire()
 {
     // Already marked as expired
     if (needsUpdate_)
@@ -130,9 +133,9 @@ bool Foam::sampledBoundedPlane::expire()
 }
 
 
-bool Foam::sampledBoundedPlane::update()
+bool Foam::sampledSurfaces::boundedPlane::update()
 {
-    Info<<"I am here =========sampledBoundedPlane======="<<endl;
+    Info<<"I am here =========boundedPlane======="<<endl;
     if (!needsUpdate_)
     {
         return false;
@@ -203,7 +206,7 @@ bool Foam::sampledBoundedPlane::update()
 }
 
 
-Foam::tmp<Foam::scalarField> Foam::sampledBoundedPlane::sample
+Foam::tmp<Foam::scalarField> Foam::sampledSurfaces::boundedPlane::sample
 (
     const volScalarField& vField
 ) const
@@ -212,7 +215,7 @@ Foam::tmp<Foam::scalarField> Foam::sampledBoundedPlane::sample
 }
 
 
-Foam::tmp<Foam::vectorField> Foam::sampledBoundedPlane::sample
+Foam::tmp<Foam::vectorField> Foam::sampledSurfaces::boundedPlane::sample
 (
     const volVectorField& vField
 ) const
@@ -221,7 +224,7 @@ Foam::tmp<Foam::vectorField> Foam::sampledBoundedPlane::sample
 }
 
 
-Foam::tmp<Foam::sphericalTensorField> Foam::sampledBoundedPlane::sample
+Foam::tmp<Foam::sphericalTensorField> Foam::sampledSurfaces::boundedPlane::sample
 (
     const volSphericalTensorField& vField
 ) const
@@ -230,7 +233,7 @@ Foam::tmp<Foam::sphericalTensorField> Foam::sampledBoundedPlane::sample
 }
 
 
-Foam::tmp<Foam::symmTensorField> Foam::sampledBoundedPlane::sample
+Foam::tmp<Foam::symmTensorField> Foam::sampledSurfaces::boundedPlane::sample
 (
     const volSymmTensorField& vField
 ) const
@@ -239,7 +242,7 @@ Foam::tmp<Foam::symmTensorField> Foam::sampledBoundedPlane::sample
 }
 
 
-Foam::tmp<Foam::tensorField> Foam::sampledBoundedPlane::sample
+Foam::tmp<Foam::tensorField> Foam::sampledSurfaces::boundedPlane::sample
 (
     const volTensorField& vField
 ) const
@@ -248,7 +251,7 @@ Foam::tmp<Foam::tensorField> Foam::sampledBoundedPlane::sample
 }
 
 
-Foam::tmp<Foam::scalarField> Foam::sampledBoundedPlane::interpolate
+Foam::tmp<Foam::scalarField> Foam::sampledSurfaces::boundedPlane::interpolate
 (
     const interpolation<scalar>& interpolator
 ) const
@@ -257,7 +260,7 @@ Foam::tmp<Foam::scalarField> Foam::sampledBoundedPlane::interpolate
 }
 
 
-Foam::tmp<Foam::vectorField> Foam::sampledBoundedPlane::interpolate
+Foam::tmp<Foam::vectorField> Foam::sampledSurfaces::boundedPlane::interpolate
 (
     const interpolation<vector>& interpolator
 ) const
@@ -265,7 +268,7 @@ Foam::tmp<Foam::vectorField> Foam::sampledBoundedPlane::interpolate
     return interpolateField(interpolator);
 }
 
-Foam::tmp<Foam::sphericalTensorField> Foam::sampledBoundedPlane::interpolate
+Foam::tmp<Foam::sphericalTensorField> Foam::sampledSurfaces::boundedPlane::interpolate
 (
     const interpolation<sphericalTensor>& interpolator
 ) const
@@ -274,7 +277,7 @@ Foam::tmp<Foam::sphericalTensorField> Foam::sampledBoundedPlane::interpolate
 }
 
 
-Foam::tmp<Foam::symmTensorField> Foam::sampledBoundedPlane::interpolate
+Foam::tmp<Foam::symmTensorField> Foam::sampledSurfaces::boundedPlane::interpolate
 (
     const interpolation<symmTensor>& interpolator
 ) const
@@ -283,7 +286,7 @@ Foam::tmp<Foam::symmTensorField> Foam::sampledBoundedPlane::interpolate
 }
 
 
-Foam::tmp<Foam::tensorField> Foam::sampledBoundedPlane::interpolate
+Foam::tmp<Foam::tensorField> Foam::sampledSurfaces::boundedPlane::interpolate
 (
     const interpolation<tensor>& interpolator
 ) const
@@ -292,9 +295,9 @@ Foam::tmp<Foam::tensorField> Foam::sampledBoundedPlane::interpolate
 }
 
 
-void Foam::sampledBoundedPlane::print(Ostream& os) const
+void Foam::sampledSurfaces::boundedPlane::print(Ostream& os) const
 {
-    os  << "sampledBoundedPlane: " << name() << " :"
+    os  << "boundedPlane: " << name() << " :"
         << "  base:" << refPoint()
         << "  normal:" << normal()
         << "  triangulate:" << triangulate_
