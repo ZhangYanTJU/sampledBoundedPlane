@@ -29,7 +29,7 @@ License
 
 template<class Type>
 Foam::tmp<Foam::Field<Type>>
-Foam::sampledBoundedPlane::sampleField
+Foam::sampledSurfaces::boundedPlane::sampleField
 (
     const GeometricField<Type, fvPatchField, volMesh>& vField
 ) const
@@ -40,7 +40,7 @@ Foam::sampledBoundedPlane::sampleField
 
 template<class Type>
 Foam::tmp<Foam::Field<Type>>
-Foam::sampledBoundedPlane::interpolateField
+Foam::sampledSurfaces::boundedPlane::interpolateField
 (
     const interpolation<Type>& interpolator
 ) const
