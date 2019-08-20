@@ -3,7 +3,6 @@
 ## 使用：
 ### 运行时
 - wmake 编译。
-- 在 controlDict 文件中加入 libs ("libZYsampling.so");
 - 在 controlDict 文件中使用，参考以下代码设置。
 ```
 functions
@@ -11,7 +10,7 @@ functions
     surfaceSampling
     {
         type            surfaces;
-        functionObjectLibs ( "libsampling.so" );
+        functionObjectLibs ( "libZYsampling.so" );
         enabled         true;
         writeControl    timeStep;
         writeInterval   1;
@@ -36,7 +35,7 @@ functions
     }
 }
 ```
-### 后处理
+### 运行后处理
 - 创建一个文件到 system 文件夹，如 sampledBoundedPlane，内容是：
 ```
 /*--------------------------------*- C++ -*----------------------------------*\
