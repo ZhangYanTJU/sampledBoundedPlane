@@ -89,5 +89,5 @@ fields          ( T );
 
 
 
-代码改编自 [openfoam.com 版本}(https://develop.openfoam.com/Development/OpenFOAM-plus/tree/master/src/sampling/sampledSurface/sampledCuttingPlane)
+代码改编自 [openfoam.com 版本](https://develop.openfoam.com/Development/OpenFOAM-plus/tree/master/src/sampling/sampledSurface/sampledCuttingPlane)
 
