@@ -87,3 +87,7 @@ fields          ( T );
 ```
 - 运行 ``postProcess -latestTime -func sampledBoundedPlane``
 
+
+
+代码改编自：
+https://develop.openfoam.com/Development/OpenFOAM-plus/tree/master/src/sampling/sampledSurface/sampledCuttingPlane
